@@ -1,23 +1,56 @@
 <resources>
 
-  <!-- Base application theme. -->
-  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    <!-- Customize your theme here. -->
+  <!-- Base application theme — NoActionBar removes the title bar entirely -->
+  <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
     <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+    <item name="colorOnPrimary">@color/colorOnPrimary</item>
+    <item name="colorSecondary">@color/colorAccent</item>
+    <item name="colorOnSecondary">@color/colorOnPrimary</item>
+    <item name="android:colorBackground">@color/colorBackground</item>
+    <item name="android:windowBackground">@color/colorBackground</item>
+    <item name="android:statusBarColor">@color/colorPrimaryDark</item>
   </style>
 
-  <style name="FullscreenTheme" parent="AppTheme">
-    <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
-    <item name="android:windowActionBarOverlay">true</item>
-    <item name="android:windowBackground">@null</item>
-    <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
-    <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+  <!-- Card style for buttons in menus -->
+  <style name="MenuCardButton">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">56dp</item>
+    <item name="android:layout_marginStart">24dp</item>
+    <item name="android:layout_marginEnd">24dp</item>
+    <item name="android:layout_marginTop">12dp</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:textColor">@color/colorTextPrimary</item>
+    <item name="android:letterSpacing">0.01</item>
+    <item name="strokeColor">@color/colorCardBorder</item>
+    <item name="strokeWidth">1dp</item>
+    <item name="cornerRadius">12dp</item>
+    <item name="backgroundTint">@color/colorSurface</item>
+    <item name="rippleColor">@color/colorPrimaryLight</item>
+    <item name="elevation">2dp</item>
   </style>
 
-  <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
-    <item name="android:background">@color/black_overlay</item>
+  <!-- Primary action button -->
+  <style name="PrimaryButton">
+    <item name="android:layout_height">52dp</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:textColor">@color/colorOnPrimary</item>
+    <item name="android:letterSpacing">0.02</item>
+    <item name="backgroundTint">@color/colorPrimary</item>
+    <item name="cornerRadius">12dp</item>
+    <item name="elevation">4dp</item>
+  </style>
+
+  <!-- Secondary/outline action button -->
+  <style name="SecondaryButton">
+    <item name="android:layout_height">52dp</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:textColor">@color/colorPrimary</item>
+    <item name="backgroundTint">#00000000</item>
+    <item name="strokeColor">@color/colorPrimary</item>
+    <item name="strokeWidth">1.5dp</item>
+    <item name="cornerRadius">12dp</item>
+    <item name="rippleColor">@color/colorPrimaryLight</item>
   </style>
 
 </resources>

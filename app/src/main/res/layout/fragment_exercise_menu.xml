@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
+
+    <!-- Header bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:paddingTop="32dp">
+
+        <TextView
+            android:id="@+id/tvMenuHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Paket"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Pilih paket soal yang ingin dikerjakan"
+            android:textColor="#C7D2FE"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+    <!-- Paket (Package) selection section -->
+    <ScrollView
+        android:id="@+id/layoutPaket"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/paket1e"
+                style="@style/MenuCardButton"
+                android:text="📦  Paket 1"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/paket2e"
+                style="@style/MenuCardButton"
+                android:text="📦  Paket 2"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/paket3e"
+                style="@style/MenuCardButton"
+                android:text="📦  Paket 3"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/paket4e"
+                style="@style/MenuCardButton"
+                android:text="📦  Paket 4"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Mapel (Subject) selection section — hidden until a paket is chosen -->
+    <LinearLayout
+        android:id="@+id/layoutMapel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mapel1"
+                    style="@style/MenuCardButton"
+                    android:visibility="gone"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mapel2"
+                    style="@style/MenuCardButton"
+                    android:visibility="gone"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mapel3"
+                    style="@style/MenuCardButton"
+                    android:visibility="gone"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mapel4"
+                    style="@style/MenuCardButton"
+                    android:visibility="gone"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"/>
+
+                <TextView
+                    android:id="@+id/tvNoSubject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="40dp"
+                    android:text="Tidak ada soal tersedia untuk paket ini."
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="14sp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Back button at the bottom -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            style="@style/SecondaryButton"
+            android:layout_width="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="← Kembali ke Pilih Paket"
+            android:textColor="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+</LinearLayout>

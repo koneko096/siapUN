@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Gradient background for title screen -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+  <gradient
+      android:startColor="#312E81"
+      android:centerColor="#4F46E5"
+      android:endColor="#818CF8"
+      android:angle="135"
+      android:type="linear"/>
+</shape>

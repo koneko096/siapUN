@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/titleFragment">
+
+    <fragment
+        android:id="@+id/titleFragment"
+        android:name="io.github.koneko096.siapun.TitleFragment"
+        android:label="Title"
+        tools:layout="@layout/fragment_title">
+        <action
+            android:id="@+id/action_titleFragment_to_exerciseMenuFragment"
+            app:destination="@id/exerciseMenuFragment" />
+        <action
+            android:id="@+id/action_titleFragment_to_highscoreMenuFragment"
+            app:destination="@id/highscoreMenuFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/exerciseMenuFragment"
+        android:name="io.github.koneko096.siapun.ExerciseMenuFragment"
+        android:label="Exercise Menu"
+        tools:layout="@layout/fragment_exercise_menu">
+        <action
+            android:id="@+id/action_exerciseMenuFragment_to_exerciseFragment"
+            app:destination="@id/exerciseFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/exerciseFragment"
+        android:name="io.github.koneko096.siapun.ExerciseFragment"
+        android:label="Exercise"
+        tools:layout="@layout/fragment_exercise">
+        <argument
+            android:name="paket"
+            app:argType="integer" />
+        <argument
+            android:name="mapel"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_exerciseFragment_to_resultFragment"
+            app:destination="@id/resultFragment"
+            app:popUpTo="@id/titleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="io.github.koneko096.siapun.ResultFragment"
+        android:label="Result"
+        tools:layout="@layout/fragment_result">
+        <argument
+            android:name="score"
+            app:argType="float" />
+        <argument
+            android:name="paket"
+            app:argType="integer" />
+        <argument
+            android:name="mapel"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_resultFragment_to_highscoreFragment"
+            app:destination="@id/highscoreFragment"
+            app:popUpTo="@id/titleFragment" />
+        <action
+            android:id="@+id/action_resultFragment_to_titleFragment"
+            app:destination="@id/titleFragment"
+            app:popUpTo="@id/titleFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/highscoreMenuFragment"
+        android:name="io.github.koneko096.siapun.HighscoreMenuFragment"
+        android:label="Highscore Menu"
+        tools:layout="@layout/fragment_highscore_menu">
+        <action
+            android:id="@+id/action_highscoreMenuFragment_to_highscoreFragment"
+            app:destination="@id/highscoreFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/highscoreFragment"
+        android:name="io.github.koneko096.siapun.HighscoreFragment"
+        android:label="Highscore"
+        tools:layout="@layout/fragment_highscore">
+        <argument
+            android:name="paket"
+            app:argType="integer" />
+        <argument
+            android:name="mapel"
+            app:argType="string" />
+    </fragment>
+</navigation>
