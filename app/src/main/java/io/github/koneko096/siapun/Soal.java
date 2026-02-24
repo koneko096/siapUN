@@ -1,5 +1,9 @@
 package io.github.koneko096.siapun;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,11 +14,21 @@ import java.util.List;
 /**
  * Created by Afrizal on 1/8/2016.
  */
+@Entity(tableName = "soal")
 public class Soal {
+  @PrimaryKey(autoGenerate = true)
+  private int id;
+  private int paket;
+  private String mapel;
   private String question;
   private List<String> choices;
   private int answer;
 
+  public Soal() {
+    // Required for Room
+  }
+
+  @Ignore
   public Soal(JSONObject soalJSON) {
     List<String> choices = new LinkedList<>();
     JSONArray choicesJSON = null;
@@ -29,6 +43,30 @@ public class Soal {
     } catch (JSONException e) {
       e.printStackTrace();
     }
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public int getPaket() {
+    return paket;
+  }
+
+  public void setPaket(int paket) {
+    this.paket = paket;
+  }
+
+  public String getMapel() {
+    return mapel;
+  }
+
+  public void setMapel(String mapel) {
+    this.mapel = mapel;
   }
 
   public String getQuestion() {

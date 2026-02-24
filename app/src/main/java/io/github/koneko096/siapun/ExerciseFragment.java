@@ -19,15 +19,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import io.github.koneko096.siapun.databinding.FragmentExerciseBinding;
@@ -37,7 +31,6 @@ public class ExerciseFragment extends Fragment implements AdapterView.OnItemSele
     private FragmentExerciseBinding binding;
     private ExerciseViewModel viewModel;
 
-    private String fileDir;
     private int paket;
     private String mapel;
 
@@ -53,17 +46,13 @@ public class ExerciseFragment extends Fragment implements AdapterView.OnItemSele
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ExerciseViewModel.class);
-
         if (getArguments() != null) {
-            paket = getArguments().getInt("paket");
-            mapel = getArguments().getString("mapel");
-            fileDir = "questions/v" + paket + "/" + mapel + ".json";
+            paket = getArguments().getInt(AppConstants.KEY_PAKET);
+            mapel = getArguments().getString(AppConstants.KEY_MAPEL);
         }
 
-        if (viewModel.getSoals().getValue() == null) {
-            viewModel.setSoals(loadQuestions());
-        }
+        ExerciseViewModelFactory factory = new ExerciseViewModelFactory(requireActivity().getApplication(), paket, mapel);
+        viewModel = new ViewModelProvider(requireActivity(), factory).get(ExerciseViewModel.class);
 
         setupObservers();
         setupListeners();
@@ -85,6 +74,11 @@ public class ExerciseFragment extends Fragment implements AdapterView.OnItemSele
 
         viewModel.getRemainingTime().observe(getViewLifecycleOwner(), this::updateTimerUI);
         viewModel.getCurrentQuestionIndex().observe(getViewLifecycleOwner(), this::updateQuestionUI);
+        viewModel.getSoals().observe(getViewLifecycleOwner(), soals -> {
+            if (soals != null && !soals.isEmpty()) {
+                setupQuizUI(); // Refresh UI if questions are loaded/updated
+            }
+        });
     }
 
     private void setupListeners() {
@@ -121,6 +115,8 @@ public class ExerciseFragment extends Fragment implements AdapterView.OnItemSele
                 options);
         binding.noSoal.setAdapter(adapter);
         binding.noSoal.setOnItemSelectedListener(this);
+
+        updateQuestionUI(viewModel.getCurrentQuestionIndex().getValue()); // Update UI with current question
     }
 
     private void updateQuestionUI(int index) {
@@ -198,36 +194,19 @@ public class ExerciseFragment extends Fragment implements AdapterView.OnItemSele
         List<Soal> soals = viewModel.getSoals().getValue();
         Integer[] selections = viewModel.getUserSelections().getValue();
         int score = 0;
-        for (int i = 0; i < soals.size(); i++) {
-            if (selections[i] != null && selections[i] == soals.get(i).getAnswer()) {
-                score += 100;
+        if (soals != null) {
+            for (int i = 0; i < soals.size(); i++) {
+                if (selections[i] != null && selections[i] == soals.get(i).getAnswer()) {
+                    score += 100;
+                }
             }
         }
 
         Bundle args = new Bundle();
-        args.putFloat("score", (float) score / soals.size());
+        args.putFloat("score", (float) score / (soals != null ? soals.size() : 1)); // Prevent division by zero
         args.putInt("paket", paket);
         args.putString("mapel", mapel);
         Navigation.findNavController(requireView()).navigate(R.id.action_exerciseFragment_to_resultFragment, args);
-    }
-
-    private List<Soal> loadQuestions() {
-        try (InputStream is = requireContext().getAssets().open(fileDir);
-                BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null)
-                sb.append(line);
-            JSONArray array = new JSONArray(sb.toString());
-            List<Soal> list = new LinkedList<>();
-            for (int i = 0; i < array.length(); i++) {
-                list.add(new Soal(array.getJSONObject(i)));
-            }
-            return list;
-        } catch (IOException | JSONException e) {
-            Log.e("ExerciseFragment", "Error loading questions", e);
-            return new ArrayList<>();
-        }
     }
 
     @Override

@@ -51,6 +51,9 @@ dependencies {
     implementation libs.androidx.room.runtime
     annotationProcessor libs.androidx.room.compiler
     
+    // WorkManager
+    implementation libs.androidx.work.runtime
+    
     // Networking
     implementation libs.retrofit
     implementation libs.converter.gson
