@@ -15,7 +15,7 @@ import java.util.List;
 
 import io.github.koneko096.siapun.AppConstants;
 import io.github.koneko096.siapun.Soal;
-import io.github.koneko096.siapun.api.GSheetService;
+import io.github.koneko096.siapun.api.QuestService;
 import io.github.koneko096.siapun.data.AppDatabase;
 import io.github.koneko096.siapun.data.SoalDao;
 import okhttp3.ResponseBody;
@@ -35,10 +35,10 @@ public class SyncWorker extends Worker {
     public Result doWork() {
         Log.d(TAG, "Starting sync work...");
 
-        GSheetService service = new Retrofit.Builder()
-                .baseUrl("https://docs.google.com/") // Base URL for Google Sheets
+        QuestService service = new Retrofit.Builder()
+                .baseUrl("https://raw.githubusercontent.com/") // Base URL for Github
                 .build()
-                .create(GSheetService.class);
+                .create(QuestService.class);
 
         try {
             Response<ResponseBody> response = service.downloadFileWithDynamicUrl(AppConstants.GSHEET_CSV_URL).execute();
@@ -49,7 +49,7 @@ public class SyncWorker extends Worker {
                 List<Soal> newSoals = new ArrayList<>();
 
                 // Skip header row
-                reader.readLine(); 
+                reader.readLine();
 
                 while ((line = reader.readLine()) != null) {
                     List<String> parsedLine = parseCsvLine(line);
@@ -62,8 +62,7 @@ public class SyncWorker extends Worker {
                                     parsedLine.get(3),
                                     parsedLine.get(4),
                                     parsedLine.get(5),
-                                    parsedLine.get(6)
-                            );
+                                    parsedLine.get(6));
                             int answer = Integer.parseInt(parsedLine.get(7));
 
                             Soal soal = new Soal();
@@ -83,9 +82,13 @@ public class SyncWorker extends Worker {
                 SoalDao soalDao = db.soalDao();
 
                 // Clear existing questions for the synced pakets/mapels and insert new ones
-                // This simplistic approach assumes the CSV is the single source of truth for all questions.
+                // This simplistic approach assumes the CSV is the single source of truth for
+                // all questions.
                 // For more granular updates, a more complex diffing logic would be required.
-                soalDao.deleteQuestions(newSoals.get(0).getPaket(), newSoals.get(0).getMapel()); // Assuming all questions in CSV are for the same paket/mapel for now
+                soalDao.deleteQuestions(newSoals.get(0).getPaket(), newSoals.get(0).getMapel()); // Assuming all
+                                                                                                 // questions in CSV are
+                                                                                                 // for the same
+                                                                                                 // paket/mapel for now
                 soalDao.insertAll(newSoals);
 
                 Log.d(TAG, "Sync work finished successfully. Inserted " + newSoals.size() + " questions.");

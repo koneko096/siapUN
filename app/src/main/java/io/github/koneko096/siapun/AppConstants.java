@@ -10,5 +10,5 @@ public class AppConstants {
     };
     public static final String KEY_PAKET = "paket";
     public static final String KEY_MAPEL = "mapel";
-    public static final String GSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1_YOUR_SHEET_ID_HERE/export?format=csv"; // TODO: Replace with your actual Google Sheet ID
+    public static final String GSHEET_CSV_URL = "https://raw.githubusercontent.com/koneko096/siapUN/refs/heads/quests/all.csv";
 }
